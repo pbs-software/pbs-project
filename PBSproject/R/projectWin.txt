@@ -1,5 +1,6 @@
-# PBSproject GUI (last modified: 2022-11-02)
-window name=PBSproj title="PBSproject for Managing R Packages" #onclose=
+## @project -- Windows description file (created: @date)
+## =====================================================
+window name="@project" title="Development of R Package: @project" #onclose=
 
 #Setup--------------------------------------------------------------------------
 grid 2 1 sticky=W
@@ -10,11 +11,11 @@ grid 2 1 sticky=W
 
 grid 3 1 sticky=W
 	label text="Package management" sticky=W padx="0 5" font="bold 11"
-	entry name=pkgname value="gadfly" label="Package name:" width=40 mode=character sticky=W pady="0 5"
+	entry name=pkgname value="" label="Package name:" width=40 mode=character sticky=W pady="0 5" edit=TRUE
 	grid 1 5 sticky=W  pady="0 10"
-		button text=New bg=orange sticky=W function=.win.addTemplates action=templates
-		button text="Edit R" bg=moccasin sticky=W function=.win.editR action=editR
+		button text=New bg=orange sticky=W function=.win.createNew action=createNew
+		button text="Edit R" bg=lightblue sticky=W function=.win.editR action=editR
 		button text="Source R" bg=greenyellow sticky=W function=.win.sourceR action=sourceR
-		button text="Edit Description" bg=lightblue sticky=W function=.win.editWin action=editWin
-		button text="Create Window" bg=lightblue sticky=W function=.win.createWin action=createWin
+		button text="Edit WDF" bg=lightblue sticky=W function=.win.editWin action=editWin
+		button text="Create WDF" bg=greenyellow sticky=W function=.win.createWin action=createWin
 

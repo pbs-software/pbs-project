@@ -4,6 +4,12 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
+0.0.4 (2022-11-22) [Rcheck=F Rbuild=F]
+  * R code
+    + Refined the juggling of self-perpetuating GUIs but still required an intermediary set of R/GUI code.
+  * Gadfly
+    + Does not like intermediary sets
+
 0.0.3 (2022-11-17) [Rcheck=F Rbuild=F]
   * R code
     + Scaled back to bare-bones functionality (removed options manager component)
