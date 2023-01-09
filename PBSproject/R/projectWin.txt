@@ -1,0 +1,194 @@
+# PBSproject GUI (last modified: 2022-11-02)
+window name=PBSproj title="PBSproject for Managing R Packages" #onclose=
+
+#------------------------------------ MENU -------------------------------------
+# All OS users see all OS intall instruction
+menu nitems=3 label=Install
+	menuitem label="PRJMB Tools for Windows" function=doAction action="browseURL(`http://www.admb-project.org/tools/admb-tools-for-windows`)"
+	menuitem label="PRJMB Downloads - Source, PRJ Studio, Binaries" function=doAction action="browseURL(`http://www.admb-project.org/downloads/`)"
+	menuitem label="Packaging for Linux/Mac" function=doAction action="browseURL(`http://www.admb-project.org/developers/packaging/`)"
+
+menu nitems=4 label="Edit"
+	menuitem label=TPL function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.tpl`,sep=``))"
+	menuitem label=DAT function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.dat`,sep=``))"
+	menuitem label=PIN function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.pin`,sep=``))"
+	menuitem label=R   function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.r`,sep=``))"
+
+menu nitems=7 label="View"
+  menuitem label=LOG function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.log`,sep=``))"
+  menuitem label=COR function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.cor`,sep=``))"
+  menuitem label=PAR function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.par`,sep=``))"
+  menuitem label=REP function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.rep`,sep=``))"
+  menuitem label=STD function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.std`,sep=``))"
+  menuitem label=MC.DAT function=doAction action="editPRJfile(paste(getWinVal()$prefix,`.mc.dat`,sep=``))"
+  menuitem label="*.PLT" function=.win.editPLT
+
+# the Examples menu will be altered by admb()
+#menu nitems=@nitems label="Examples"
+#	@menuitems
+
+menu nitems=4 label="Help"
+	menu nitems=4 label="Manuals"
+		menuitem label="PRJMB Installation" function=doAction action="openFile(`doc/PRJMB-IG.pdf`,package=`PBSproject`)"
+		menuitem label="PRJMB Manual" function=doAction action="openFile(`doc/admb.pdf`,package=`PBSproject`)"
+		menuitem label="PRJMB RE Manual" function=doAction action="openFile(`doc/admb-re.pdf`,package=`PBSproject`)"
+		menuitem label="AUTODIF Library" function=doAction action="openFile(`doc/autodif.pdf`,package=`PBSproject`)"
+	menu nitems=5 label="Online"
+		menuitem label="PRJMB Project" function=doAction action="browseURL(`http://admb-project.org/`)"
+		menuitem label="PRJMB Manuals" function=doAction action="browseURL(`http://www.admb-project.org/docs/manuals/`)"
+		menuitem label="PRJMB Examples" function=doAction action="browseURL(`http://www.admb-project.org/examples/`)"
+		menuitem label="PRJMB FAQ" function=doAction action="browseURL(`http://www.admb-project.org/docs/faq/`)"
+		menuitem label="PRJMB on GitHub" function=doAction action="browseURL(`https://github.com/admb-project/admb/`)"
+	menuitem label="User Guide" function=doAction action="openFile(`doc/PBSproject-UG.pdf`,package=`PBSproject`)"
+	menuitem label=About function=doAction action="editPRJfile(paste(system.file(package=`PBSproject`),`/DESCRIPTION`,sep=``))"
+
+#----------------------------------- BUTTONS -----------------------------------
+
+grid 1 5 sticky=E
+#	label "Prefix:" sticky=E
+#	droplist name=prefix mode=character sticky=W width=25 values="" add=T 
+#	button text="Refresh" sticky=W function=.load.prefix.droplist bg=honeydew action=refresh
+	button text="Open" func=doAction action="openFile(\".\")" bg=honeydew
+	button text="Set WD" function=.changeWD bg=honeydew action=setwd
+	button text="R" func=doAction action="viewCode(pkg=`PBSproject`)" bg=lemonchiffon
+	button text="WDF" func=doAction action="openFile(`@wdf`)" bg=lemonchiffon
+	button text="UG"  func=doAction action="openUG(pkg=`PBSproject`)" bg=lemonchiffon
+grid 1 2 sticky=E
+	label "WD:" sticky=E
+	droplist name=currentdir value="'' '<change path>'" add=T width=70 func=.changeWDEnter
+
+#notebook tabs="Setup Make Run Output" pady="2 0" #selected=3
+notebook tabs="Setup" pady="2 0" #selected=3
+
+#Setup--------------------------------------------------------------------------
+grid 8 1 sticky=E
+	grid 1 5 sticky=E  pady="0 10"
+		entry name=pkgname value="myNewPkg" label="   Package name:" width=25 mode=character sticky=W
+		button text=Create width=5 bg=greenyellow sticky=E function=.win.createPkg action=create
+		button text="Add R" width=5 bg=pink sticky=E function=.win.addRcode action=addRcode
+		button text="Check" width=5 bg=aliceblue sticky=E function=.win.check.release action=check
+		button text="Release" width=5 bg=lightblue1 sticky=E function=.win.check.release action=release
+	grid 1 4 sticky=W
+		label "Path Setup" sticky=W fg=purple3 font="bold 11" padx="0 240"
+		#null padx=129
+		button text=Suggest   width=6 bg=aliceblue sticky=E function=.win.suggestPath action=suggest
+		#button text=pathfile  width=6 bg=lightblue1 sticky=E function=.win.readPRJpaths action=@pathfile
+		button name=checkbutton text="Verify" func=.win.checkPRJopts bg=moccasin padx="0 5" action=verify
+		label text=test name=chkstat width=4 bg=lightgoldenrodyellow sticky=E
+	grid 1 2 sticky=E
+		entry name=projpath value="" label="Project path:" width=55 mode=character func=setGUIoptions action=projpath
+		button text=">" func=doAction action="selectDir(usewidget=\"projpath\")"
+	grid 1 2 sticky=E
+		entry name=batpath value="" label="Batch files path:" width=55 mode=character func=setGUIoptions action=batpath
+		button text=">" func=doAction action="selectDir(usewidget=\"batpath\")"
+	grid 1 2 sticky=E
+		entry name=unixbin value="" label="Unix utilities bin:" width=55 mode=character func=setGUIoptions action=projpath
+		button text=">" func=doAction action="selectDir(usewidget=\"unixbin\")"
+	grid 1 2 sticky=E
+		entry name=editor value="" label=Editor: width=55 mode=character func=setGUIoptions action=editor
+		button text=">" func=doAction action="selectFile(usewidget=\"editor\")"
+		## e.g. C:/Apps/UltraEdit/Uedit32.exe
+
+#	grid 1 3 sticky=E
+#		entry name=admbver value="" label="Versions:  admb" width=16 mode=character func=setGUIoptions action=admbver
+#		entry name=gccver value="" label="g++" width=17 mode=character func=setGUIoptions action=gccver padx="2 0"
+#		button name=checkbutton text="Verify" func=.win.checkPRJopts bg=moccasin padx="10 0" action=verify
+
+	label "Load/Save Paths from/to File" sticky=W fg=purple3 font="bold 11" pady="5 0"
+	grid 1 5 sticky=E
+		label text="Path file: "
+		entry name=optfile value="" label="" width=30 mode=character action=optfile
+		button text=">" func=doAction action="optfile=selectFile(filetype=list(c(`.txt`)),usewidget=NULL); setWinVal(list(optfile=basename(optfile)))"
+		button text="Load" func=.win.readPRJpaths bg=palegoldenrod action=load
+		button text="Save"  func=.win.savePRJpaths bg=gold action=save
+
+##Make---------------------------------------------------------------------------
+#grid 4 1 sticky=""
+#
+#	grid 1 5 sticky=W
+#		label text=Make font="bold 11" sticky=W fg=blue padx="0 10"
+#		button text="tpl" func=doAction action="editPRJ(getWinVal()$prefix,c(`.tpl`))" 
+#		button text="dat pin" func=doAction action="editPRJ(getWinVal()$prefix,c(`.dat`,`.pin`))" 
+#		button text="cpp log" func=doAction action="editPRJ(getWinVal()$prefix,c(`.cpp`,`.log`))" 
+#		button text="r" width=1 func=doAction action="editPRJfile(paste(getWinVal()$prefix,`.r`,sep=``))"
+#	grid 1 2 sticky=W pady="5 0"
+#		grid 4 3 sticky=W
+#			label text=Operation: sticky=NW
+#			radio name=safe mode=logical value=TRUE  text=Safe sticky=W
+#			radio name=safe mode=logical value=FALSE text=Optimize sticky=W
+#			label text="Ran Eff:" sticky=NW
+#			radio name=raneff mode=logical value=FALSE text=No  sticky=W
+#			radio name=raneff mode=logical value=TRUE  text=Yes sticky=W
+#			label text="create DLL:" sticky=NW
+#			radio name=dll mode=logical value=FALSE text=No  sticky=W
+#			radio name=dll mode=logical value=TRUE  text=Yes sticky=W
+#			label text="debug symbols:" sticky=NW
+#			radio name=debugsymbols mode=logical value=FALSE text=No  sticky=W
+#			radio name=debugsymbols mode=logical value=TRUE  text=Yes sticky=W
+#		grid 2 1
+#			label text="         Make times\nUsr          Sys           Elap  " sticky=E
+#			matrix nrow=3 ncol=3 names=Mtime rowlabels=NULL collabels=NULL width=7 entrybg=grey94 sticky=N
+#	grid 1 7
+#		button text=Make    func=.win.makePRJ  width=7 bg="#b9d7ff" action=make
+#		null padx=1 pady=5
+#		button text=Convert func=.win.convPRJ  width=7 bg="#cae1ff" action=convert
+#		button text=Compile func=.win.compPRJ  width=7 bg="#d2e6ff" action=compile
+#		button text=Link    func=.win.linkPRJ  width=7 bg="#dfeeff" action=link
+#		null padx=1
+#		button text=Clean   func=.win.cleanPRJ width=7 bg=aliceblue action=clean
+#	grid 1 4
+#		label text="Output:" 
+#		check name=logfile text=logfile checked=T sticky=W
+#		check name=add text=add checked=F sticky=W
+#		check name=verbose text=verbose checked=T sticky=W
+#
+##Run----------------------------------------------------------------------------
+#grid 5 1 sticky=W
+#	grid 1 2 sticky=W
+#		label text=Run font="bold 11" sticky=W fg=forestgreen
+#		matrix nrow=1 ncol=3 names=Rtime rowlabels="'Run times'" collabels=NULL width=8 entrybg=grey94 padx="10 0"
+#	grid 2 4  sticky=W
+#		label text="Options:" 
+#		radio name=runType text=Normal   value=normal mode=character func=.win.showGUIargs selected=T 
+#		radio name=runType text=MCMC     value=mcmc   mode=character func=.win.showGUIargs
+#		radio name=runType text=Profile  value=lprof  mode=character func=.win.showGUIargs
+#		#radio name=runType text=Custom   value=custom mode=character func=.win.showGUIargs
+#		label text="Output:" 
+#		check name=logfile text=logfile checked=T sticky=W
+#		check name=add text=add checked=T sticky=W
+#		check name=verbose text=verbose checked=T sticky=W
+#		#null
+#	grid 1 3 sticky=W pady="15 0"
+#		label text="MCMC:" 
+#		entry name=nsims label=Sims value=10000 sticky=W width=15
+#		entry name=nthin label=Thin value=100 sticky=W width=10
+#	grid 1 3  sticky=W
+#		label text="PRJ args" 
+#		entry name=argvec value="" label="" width=40 mode=character entrybg=ghostwhite #grey94
+#		button text="All args" func=.win.showPRJargs width=6 bg=mistyrose padx="5 0" #width=6
+#	button text=Run func=.win.run bg=green font="bold 9" width=5 sticky=E
+#
+##Output-------------------------------------------------------------------------
+#grid 3 1 sticky=""
+#	grid 1 3 sticky=W
+#		label text=Output font="bold 11" sticky=NW fg=orangered
+#		vector length=6 names=toView mode=logical labels="log cor par rep std mc.dat" sticky=NW \
+#			values="F F F F F F" vecnames="log cor par rep std mc.dat" action=check func=.win.viewRep 
+#		vector length=1 names=pltView mode=logical labels="*.plt" sticky=NW values="F" vecnames="plt" action=check func=.win.viewRep
+#	grid 1 6 sticky=E
+#		label text=Reports: sticky=NW
+#		radio name=allnone text=None value=0 func=.win.viewRep sticky=W action="allnone" selected=TRUE
+#		radio name=allnone text=All value=1 func=.win.viewRep sticky=W action="allnone"
+#		button text=View func=.win.viewRep action="open"
+#		button text=Import func=.win.readRep action="import"
+#		button text="Clean WD" func=cleanPRJ bg=ghostwhite
+#	grid 1 8 sticky=W pady="25 0"
+#		label text=MCMC sticky=NW
+#		button text="Pairs" func=.win.plotMC action="pairs" bg="#ffb3b3"
+#		button text="Eggs" func=.win.plotMC action="eggs" bg="#ffe6e6"
+#		button text="ACF" func=.win.plotMC action="acf" bg="#ffb3b3"
+#		button text="Trace" func=.win.plotMC action="trace" bg="#ffe6e6"
+#		button text="Density" func=.win.plotMC action="dens" bg="#ffb3b3"
+#		entry name=pthin label=Thin value=1 sticky=W width=4
+#		button text=Var func=.chooseCols
+

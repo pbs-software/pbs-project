@@ -1,0 +1,12 @@
+***** Temporary display until R code is developed. *****
+
+Check and release:
+
+check() updates the documentation, then builds and checks the package locally.
+check_win() checks a package using win-builder, and 
+check_rhub() checks a package using r-hub. 
+This allows you to easily check your package on all systems CRAN uses before submission.
+
+release() makes sure everything is ok with your package 
+(including asking you a number of questions), then builds and uploads to CRAN.
+

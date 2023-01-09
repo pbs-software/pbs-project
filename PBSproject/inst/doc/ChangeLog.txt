@@ -1,0 +1,12 @@
+PBSproject Changes
+===================================
+Authors:  JTS = Jon T. Schnute
+          RH  = Rowan Haigh
+-----------------------------------
+
+0.0.1 (2022-11-04) [Rcheck=F Rbuild=F]
+  * R code
+    + Started PBSproject with modified functions from PBSadmb (RH 231104)
+      - `projects.r', `optFuns.r', `utilFuns.r'
+  * GUI code
+    + Added `projectsWin.txt' and `PRJopts.txt'
