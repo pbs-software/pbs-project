@@ -4,6 +4,12 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
+0.0.3 (2022-11-17) [Rcheck=F Rbuild=F]
+  * R code
+    + Scaled back to bare-bones functionality (removed options manager component)
+  * Gadly
+    + Collaborators are not understanding each other so project stripped back to the the most basic form.
+
 0.0.2 (2022-11-15) [Rcheck=F Rbuild=F]
   * R code
     + Added `guiFuns.r' and modified other R code files.
