@@ -1,0 +1,79 @@
+## @projname -- Windows description file (created: @date)
+## =====================================================
+window name="@projname" title="Development of Project: @projname" #onclose=
+
+# Menu Items--------------------------------------------------------------------
+#menu nitems=1 label="Help"
+menu nitems=2 label="Manuals"
+	menu nitems=4 bg=honeydew label="PBS packages"
+		menuitem bg=honeydew label="PBSmodelling" function=doAction action="openUG(pkg=`PBSmodelling`)"
+		menuitem bg=honeydew label="PBSmapping" function=doAction action="openUG(pkg=`PBSmapping`)"
+		menuitem bg=honeydew label="PBSadmb" function=doAction action="openUG(pkg=`PBSadmb`)"
+		menuitem bg=honeydew label="PBSddesolve" function=doAction action="openUG(pkg=`PBSddesolve`)"
+	menu nitems=4 bg=thistle1 label="AD Model Builder"
+		menuitem bg=thistle1 label="ADMB Installation Guide" function=doAction action="openFile(`doc/ADMB-IG.pdf`,package=`PBSadmb`)"
+		menuitem bg=thistle1 label="ADMB Manual" function=doAction action="openFile(`doc/admb.pdf`,package=`PBSadmb`)"
+		menuitem bg=thistle1 label="ADMB RE Manual" function=doAction action="openFile(`doc/admb-re.pdf`,package=`PBSadmb`)"
+		menuitem bg=thistle1 label="AUTODIF Library" function=doAction action="openFile(`doc/autodif.pdf`, package=`PBSadmb`)"
+menu nitems=2 label="Online"
+	menu nitems=8 bg=aliceblue label="GitHub"
+		menuitem bg=aliceblue label="PBS Software" function=doAction action="browseURL(`https://github.com/pbs-software`)"
+		menuitem bg=aliceblue label="ADMB Project" function=doAction action="browseURL(`https://github.com/admb-project/admb/`)"
+		menuitem bg=aliceblue label="NOAA Stock Synthesis 3" function=doAction action="browseURL(`https://github.com/nmfs-stock-synthesis/stock-synthesis`)"
+		menuitem bg=aliceblue label="r4ss - R code for visualising SS3 results" function=doAction action="browseURL(`https://github.com/r4ss/r4ss`)"
+		menuitem bg=aliceblue label="adnuts - R code for no U-turn sampling" function=doAction action="browseURL(`https://github.com/Cole-Monnahan-NOAA/adnuts`)"
+		menuitem bg=aliceblue label="GF Assessment Repositories" function=doAction action="browseURL(`https://github.com/pbs-assess`)"
+		menuitem bg=aliceblue label="GF Synopsis Report" function=doAction action="browseURL(`https://github.com/pbs-assess/gfsynopsis`)"
+		menuitem bg=aliceblue label="iSCAM Model" function=doAction action="browseURL(`https://github.com/smartell/iSCAM`)"
+	menu nitems=4 bg=thistle1 label="AD Model Builder"
+		menuitem bg=thistle1 label="ADMB Project" function=doAction action="browseURL(`http://admb-project.org/`)"
+		menuitem bg=thistle1 label="ADMB Manuals" function=doAction action="browseURL(`http://www.admb-project.org/docs/manuals/`)"
+		menuitem bg=thistle1 label="ADMB Examples" function=doAction action="browseURL(`http://www.admb-project.org/examples/`)"
+		menuitem bg=thistle1 label="ADMB FAQ" function=doAction action="browseURL(`http://www.admb-project.org/docs/faq/`)"
+#	menuitem label="User Guide" function=doAction action="openFile(`doc/PBSproject-UG.pdf`,package=`PBSproject`)"
+#	menuitem label=About function=doAction action="editADfile(paste(system.file(package=`PBSadmb`),`/DESCRIPTION`,sep=``))"
+
+# Information-------------------------------------------------------------------
+grid 1 6 sticky=E
+	label text="Files:" sticky=W padx="0 2"
+	button text="Open" bg=moccasin func=doAction action="openFile(\".\")"
+	button text="UG"   bg=moccasin func=doAction action="openUG(pkg=`PBSmodelling`)"
+	label text="Templates:" sticky=W padx="5 2"
+	button text="R"   bg=gold func=doAction action=".do.backup(`./projectTemplate.r`); openFile(`./projectTemplate.r`)"
+	button text="WDF" bg=gold func=doAction action=".do.backup(`./projectTemplateWin.txt`); openFile(`./projectTemplateWin.txt`)"
+
+
+# Utilities---------------------------------------------------------------------
+grid 2 1 sticky=W pady="5 0" #sidetitle="Utilities" sidefont="bold 20"
+	grid 1 4  sticky=W
+		label text="Utils" sticky=W padx="0 5" font="bold 10"
+		entry name=editor value="C:/Apps/UltraEdit/Uedit32.exe" label=Editor: width=42 mode=character func=setGUIoptions action=editor
+		button text=">" func=doAction action="selectFile(usewidget=\"editor\")"
+		button text="Set" bg=green func=.win.setPBSext
+	grid 1 4 sticky=E
+		label text="Global Env objects:" sticky=W padx="0 5"
+		button text="List" fg=blue bg=aliceblue sticky=W function=.win.clearMost action=ls
+		button text="Clear" fg=red bg=lemonchiffon sticky=W function=.win.clearMost action=clear
+		check name=hidden checked=F text="+hidden" action=hidden
+
+label text="------------------------------------------------" sticky=E font="courier 10"
+
+# Management--------------------------------------------------------------------
+grid 3 1 sticky=W
+	grid 1 2 sticky=W
+		label text="Curr\nProj" sticky=W font="bold 10"
+		grid 1 2 sticky=W
+			entry name=projname value="@projname" label="Name:" width=12 mode=character sticky=E pady="0 0" edit=TRUE
+			entry name=projpath value="@projpath" label="Path:" width=33 mode=character sticky=E pady="0 0" edit=FALSE noeditbg=thistle1
+	grid 1 4 sticky=E  pady="0 10"
+		button text="Edit R" bg=lightblue sticky=W function=.win.editR action=editR
+		button text="Source R" bg=greenyellow sticky=W function=.win.sourceR action=sourceR
+		button text="Edit WDF" bg=lightblue sticky=W function=.win.editWin action=editWin
+		button text=Refresh bg=yellow sticky=W function=.win.refresh action=refresh
+	grid 1 5 sticky=W relief=groove borderwidth=2 pady="5 0"
+		button text=Open bg=tan1 sticky=W function=.win.createProject action=createProject
+		entry name=newprojname value="<new project name>" label=NULL width=20 mode=character sticky=W pady="0 0" edit=TRUE action=newprojname
+		entry name=newprojpath value="." label="Path:" width=20 mode=character sticky=W pady="0 0" edit=TRUE func=setGUIoptions action="newprojpath"
+		button text=">" func=doAction action="selectDir(usewidget=\"newprojpath\")" 
+		check name=overwrite checked=T text="New" action=overwrite
+

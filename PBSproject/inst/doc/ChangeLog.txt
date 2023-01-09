@@ -4,30 +4,43 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
+0.0.6 (2022-12-30) [Rcheck=F Rbuild=F]
+  * R code
+    + Abandoned GUI control and implemented command line `createProject' that uses two template files ('projectTemplate.r' and 'projectTemplateWin.txt').
+  * GUI code
+    + Added multiple help references to a menu system.
+  * Sage
+    + Does not like having to source the code and wants everything wrapped up into an R package.
+    + Prefers `createProject' to simply create two new project files (e.g., `xxx.r' and `xxxWin.txt') with no GUI.
+      - Template files would remain safe in the package environment.
+      - Suggested a `style' argument for createProject that could choose from a variety of template styles.
+    + Request second function `openProject' that would create a GUI from the specified project.
+
+
 0.0.5 (2022-11-24) [Rcheck=F Rbuild=F]
   * R code
     + Refined the code further but still uses intermediary code sets.
-  * Gadfly
+  * Sage
     + Does not like initial master control GUI to create project GUIs.
       - Would prefer a command line function 'createProject' to get the ball rolling.
 
 0.0.4 (2022-11-22) [Rcheck=F Rbuild=F]
   * R code
     + Refined the juggling of self-perpetuating GUIs but still required an intermediary set of R/GUI code.
-  * Gadfly
+  * Sage
     + Does not like intermediary sets.
 
 0.0.3 (2022-11-17) [Rcheck=F Rbuild=F]
   * R code
     + Scaled back to bare-bones functionality (removed options manager component)
-  * Gadly
+  * Sage
     + Collaborators are not understanding each other so project stripped back to the the most basic form.
 
 0.0.2 (2022-11-15) [Rcheck=F Rbuild=F]
   * R code
     + Added `guiFuns.r' and modified other R code files.
     + Enhanced the manipulation of user-specied options.
-  * Gadfly
+  * Sage
     + Too complicated (code is running ahead of design)
 
 0.0.1 (2022-11-04) [Rcheck=F Rbuild=F]
@@ -36,5 +49,5 @@ Authors:  JTS = Jon T. Schnute
       - `projects.r', `optFuns.r', `utilFuns.r'
   * GUI code
     + Added `projectsWin.txt' and `PRJopts.txt'
-  * Gadfly
+  * Sage
     + Seems a bit too complicated but good first effort.
