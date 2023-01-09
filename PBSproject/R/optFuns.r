@@ -111,7 +111,7 @@ checkPRJopts=function(opts=getOptions( jtcall(.PBSproj) ),
 		if (all(vmess==TRUE)) {
 			if(warn && verify) cat("All programs found\n\n")
 			#if(popup) showAlert("All programs found","Continue","info") }
-		 } else {
+		} else {
 			badmess = paste("Programs not found:\n----------------------\n", paste(names(vmess)[!vmess],collapse="\n"),
 				"\n\nAlter the path file (default 'PRJpaths.txt') in the working directory.\n",
 				"     ~~~OR~~~\n",
@@ -197,12 +197,17 @@ checkPRJopts=function(opts=getOptions( jtcall(.PBSproj) ),
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.win.checkPRJpath
 
 
-## readPRJopts---------------------------2022-11-03
-## Read PRJ options from a file.
+## readPRJopts--------------------------2022-11-14
+## Read PRJ options from a file with suffix '.opt'.
 ## Only called by `.initOptions()'
+## Path files will be saved with user-specified suffix.
 ## ---------------------------------------------RH
-readPRJopts <- function(optfile="PRJopts.txt")
+readPRJopts <- function(optfile="PRJopts.opt", pathfile.ext=".txt")
 {
+	if (!grepl("\\.opt$", optfile)){
+		mess = "Choose options file name with extension '.opt'"
+		showAlert (mess); stop(mess)
+	}
 	## Create instance of option manager - use this to get/set/save/load options
 	## First attempt to load options from the package, then attempt to load options from the current dir (which will override pkg options)
 	sysfile = system.file(package="PBSproj")
@@ -210,7 +215,7 @@ readPRJopts <- function(optfile="PRJopts.txt")
 	if (.is.empty(sysfile))
 		sysfile = getwd()
 	if (.is.empty(getWinVal()$optfile))
-		optfile = "PRJopts.txt"
+		optfile = "PRJopts.opt"
 	pkg_fname = paste0( sysfile, "/", optfile)
 	.PBSproj.pkgOptions <- new( "PBSoptions", filename = pkg_fname, initial.options = list(projpath="", batpath="", unixbin="", editor=""), gui.prefix="" )
 	jtput(.PBSproj.pkgOptions)
@@ -218,36 +223,45 @@ readPRJopts <- function(optfile="PRJopts.txt")
 	## Load from current dir, using pkgOptions as default values
 	.PBSproj <- new( "PBSoptions", filename = optfile, initial.options = getOptions( .PBSproj.pkgOptions ), gui.prefix="")
 
+	if(file.exists(optfile)){
+		fornow = eval(parse(text=paste0(readLines(optfile),collapse=" ")))
+		fornow = lapply(fornow,convSlashes, os="unix")
+		setOptions(.PBSproj, fornow)
+	}
 	## Standardise paths with OS path separators
 	allpaths = getOptions(.PBSproj)[c("projpath","batpath","unixbin","editor")]
 	ospaths  = lapply(allpaths,convSlashes, os="unix")
 	setWinVal(ospaths, winName="PBSproj")
-	setWinVal(list(optfile=optfile), winName="PBSproj")
+#browser();return()
+	setWinVal(list(optfile=gsub("\\.opt$", pathfile.ext, optfile)), winName="PBSproj")
 	setWinVal(list(currentdir=getwd()), winName="PBSproj")
 	setOptions(.PBSproj, ospaths)
-	jtput(.PBSproj)
+	jtput(.PBSproj); jtput(pathfile.ext)
 	invisible()
 }
-##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~readPRJopts
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~readPRJopts
 
 
-## writePRJopts--------------------------2015-01-23
+## writePRJopts-------------------------2022-11-14
 ## Writes PRJ options to a file.
 ## Demote this to an automatic back-up file if user 
 ## saves the PRJpaths file.
 ## ---------------------------------------------RH
-writePRJopts <- function(optfile="PRJopts.txt")
+writePRJopts <- function(optfile="PRJopts.opt")
 {
-	## save to current dir
+	## save backups to current dir
 	jtget(.PBSproj)
+#browser();return()
 	saveOptions( .PBSproj, optfile )
+	#saveOptions( .PBSproj, fname=paste0(optfile, ".rwh") )  ## change file name otherwise it interferes with optfile
 
 	## save to pkg dir (don't change fname)
 	opts <- getOptions( .PBSproj )
 	jtget(.PBSproj.pkgOptions)
 	setOptions(.PBSproj.pkgOptions,opts)
 	jtput(.PBSproj.pkgOptions)
-	saveOptions( .PBSproj.pkgOptions )
+	#saveOptions( .PBSproj.pkgOptions )  ## change file name otherwise it interferes with optfile
+	saveOptions( .PBSproj.pkgOptions, fname=paste0(optfile, ".pkg.rwh") )  ## change file name otherwise it interferes with optfile
 	return(invisible(NULL))
 }
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~writePRJopts
@@ -275,13 +289,15 @@ readPRJpaths = function(pathfile)
 .win.readPRJpaths = function(winName="PBSproj")
 {
 	pathfile = getWinVal()$optfile
+	pathfile.ext = if(is.null(jtcall(pathfile.ext))) ".txt" else jtget(pathfile.ext)
+	pathfile = sub("\\.opt$", pathfile.ext, pathfile)
 	readPRJpaths(pathfile)
 	loadOptionsGUI( jtcall(.PBSproj) )
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.win.readPRJpaths
 
 
-## savePRJpaths--------------------------2018-09-27
+## savePRJpaths-------------------------2022-11-14
 ## Save PRJ paths to a simple 2-column file.
 ## Assumes .PBSproj options object exists.
 ## ---------------------------------------------RH
@@ -296,7 +312,8 @@ savePRJpaths = function(pathfile)
 	upath = if (isWin) c("projpath","batpath","unixbin","editor") else c("projpath","batpath","editor")
 	uopts = Uopts[upath]
 	ufile = t(sapply(upath,function(x,u){
-		c(x,paste(rep(" ",10 - nchar(x)),collapse=""),convSlashes(u[[x]], os="unix", addQuotes=TRUE))
+		umess = c(x,paste(rep(" ",10 - nchar(x)),collapse=""),convSlashes(u[[x]], os="unix", addQuotes=TRUE))
+		return(umess)
 		}, u=uopts, USE.NAMES=FALSE))
 	write.table(ufile, file=pathfile, row.names=FALSE, col.names=FALSE, quote=FALSE, sep="")
 }
@@ -305,8 +322,10 @@ savePRJpaths = function(pathfile)
 {
 	.win.setPRJpath()
 	pathfile = getWinVal()$optfile
+	pathfile.ext = if(is.null(jtcall(pathfile.ext))) ".txt" else jtget(pathfile.ext)
+	pathfile = sub("\\.opt$", pathfile.ext, pathfile)
 	savePRJpaths(pathfile)
-	writePRJopts() ## automatic backup to `PRJopts.txt' (only if user pushes the Save button)
+	writePRJopts(sub(paste0("\\",pathfile.ext,"$"), ".opt", pathfile)) ## automatic backup to `PRJopts.txt' (only if user pushes the Save button)
 }
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.win.savePRJpaths
 
@@ -349,7 +368,10 @@ setPRJpath <- function( batpath, projpath, unixbin, editor )
 	path_sep <- .Platform$path.sep
 	#dir_sep <- ifelse( .Platform$OS.type == "windows", "\\", "/" )
 	dir_sep <- ifelse( .Platform$OS.type == "windows", "/", "/" )
-	
+
+	pathfile.ext = if(is.null(jtcall(pathfile.ext))) ".txt" else jtget(pathfile.ext)
+	pathfile = sub("\\.opt$", pathfile.ext, pathfile)
+
 	## User can specify a 2-column pathfile (no headers)
 	if (!missing(pathfile) && !is.null(pathfile) && file.exists(pathfile))
 		readPRJpaths(pathfile)

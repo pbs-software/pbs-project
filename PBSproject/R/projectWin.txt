@@ -34,11 +34,11 @@ menu nitems=4 label="Help"
 		menuitem label="PRJMB RE Manual" function=doAction action="openFile(`doc/admb-re.pdf`,package=`PBSproject`)"
 		menuitem label="AUTODIF Library" function=doAction action="openFile(`doc/autodif.pdf`,package=`PBSproject`)"
 	menu nitems=5 label="Online"
-		menuitem label="PRJMB Project" function=doAction action="browseURL(`http://admb-project.org/`)"
-		menuitem label="PRJMB Manuals" function=doAction action="browseURL(`http://www.admb-project.org/docs/manuals/`)"
-		menuitem label="PRJMB Examples" function=doAction action="browseURL(`http://www.admb-project.org/examples/`)"
-		menuitem label="PRJMB FAQ" function=doAction action="browseURL(`http://www.admb-project.org/docs/faq/`)"
-		menuitem label="PRJMB on GitHub" function=doAction action="browseURL(`https://github.com/admb-project/admb/`)"
+		menuitem label="Proj Project" function=doAction action="browseURL(`http://admb-project.org/`)"
+		menuitem label="Proj Manuals" function=doAction action="browseURL(`http://www.admb-project.org/docs/manuals/`)"
+		menuitem label="Proj Examples" function=doAction action="browseURL(`http://www.admb-project.org/examples/`)"
+		menuitem label="Proj FAQ" function=doAction action="browseURL(`http://www.admb-project.org/docs/faq/`)"
+		menuitem label="Proj on GitHub" function=doAction action="browseURL(`https://github.com/admb-project/admb/`)"
 	menuitem label="User Guide" function=doAction action="openFile(`doc/PBSproject-UG.pdf`,package=`PBSproject`)"
 	menuitem label=About function=doAction action="editPRJfile(paste(system.file(package=`PBSproject`),`/DESCRIPTION`,sep=``))"
 
@@ -50,31 +50,26 @@ grid 1 5 sticky=E
 #	button text="Refresh" sticky=W function=.load.prefix.droplist bg=honeydew action=refresh
 	button text="Open" func=doAction action="openFile(\".\")" bg=honeydew
 	button text="Set WD" function=.changeWD bg=honeydew action=setwd
-	button text="R" func=doAction action="viewCode(pkg=`PBSproject`)" bg=lemonchiffon
-	button text="WDF" func=doAction action="openFile(`@wdf`)" bg=lemonchiffon
-	button text="UG"  func=doAction action="openUG(pkg=`PBSproject`)" bg=lemonchiffon
+	button text="R" func=doAction bg=lemonchiffon   action="openFile(`./projects.r`)" ## action="viewCode(pkg=`PBSproject`)"
+	button text="WDF" func=doAction bg=lemonchiffon action="openFile(`./projectWin.txt`)" ## "openFile(`@wdf`)"
+	button text="UG"  func=doAction action="openUG(pkg=`PBSmodelling`)" bg=lemonchiffon
 grid 1 2 sticky=E
 	label "WD:" sticky=E
 	droplist name=currentdir value="'' '<change path>'" add=T width=70 func=.changeWDEnter
 
 #notebook tabs="Setup Make Run Output" pady="2 0" #selected=3
-notebook tabs="Setup" pady="2 0" #selected=3
+notebook tabs="Setup Manage" pady="2 0" selected=2
 
 #Setup--------------------------------------------------------------------------
 grid 8 1 sticky=E
-	grid 1 5 sticky=E  pady="0 10"
+	label "Path Setup" sticky=W fg=purple3 font="bold 11" padx="0 240"
+	grid 1 5 sticky=W
 		entry name=pkgname value="myNewPkg" label="   Package name:" width=25 mode=character sticky=W
-		button text=Create width=5 bg=greenyellow sticky=E function=.win.createPkg action=create
-		button text="Add R" width=5 bg=pink sticky=E function=.win.addRcode action=addRcode
-		button text="Check" width=5 bg=aliceblue sticky=E function=.win.check.release action=check
-		button text="Release" width=5 bg=lightblue1 sticky=E function=.win.check.release action=release
-	grid 1 4 sticky=W
-		label "Path Setup" sticky=W fg=purple3 font="bold 11" padx="0 240"
-		#null padx=129
+		label "Paths:" sticky=W padx="5 2"
 		button text=Suggest   width=6 bg=aliceblue sticky=E function=.win.suggestPath action=suggest
 		#button text=pathfile  width=6 bg=lightblue1 sticky=E function=.win.readPRJpaths action=@pathfile
 		button name=checkbutton text="Verify" func=.win.checkPRJopts bg=moccasin padx="0 5" action=verify
-		label text=test name=chkstat width=4 bg=lightgoldenrodyellow sticky=E
+		label text=test name=chkstat width=4 sticky=E bg=pink1 #bg=lightgoldenrodyellow
 	grid 1 2 sticky=E
 		entry name=projpath value="" label="Project path:" width=55 mode=character func=setGUIoptions action=projpath
 		button text=">" func=doAction action="selectDir(usewidget=\"projpath\")"
@@ -100,9 +95,28 @@ grid 8 1 sticky=E
 		entry name=optfile value="" label="" width=30 mode=character action=optfile
 		button text=">" func=doAction action="optfile=selectFile(filetype=list(c(`.txt`)),usewidget=NULL); setWinVal(list(optfile=basename(optfile)))"
 		button text="Load" func=.win.readPRJpaths bg=palegoldenrod action=load
-		button text="Save"  func=.win.savePRJpaths bg=gold action=save
+		button text="Save" func=.win.savePRJpaths bg=gold action=save
 
-##Make---------------------------------------------------------------------------
+#Manage---------------------------------------------------------------------------
+grid 6 1 sticky=E
+	label text="New package and templates" sticky=W padx="0 5" font="bold 11"
+	grid 1 5 sticky=E  pady="0 10"
+		entry name=pkgname value="myNewPkg" label="Package name:" width=25 mode=character sticky=E
+		button text=Create width=5 bg=greenyellow sticky=E function=.win.createPkg action=create
+		button text=Templates width=7 bg=orange sticky=E function=.win.addTemplates action=templates
+		button text="Edit R" width=5 bg=moccasin sticky=E function=.win.editR action="myNewPkg.r"
+		button text="Edit Win" width=6 bg=lightblue sticky=E function=.win.editWin action="myNewPkgWin.txt"
+	label text="Add code from another repository" sticky=W padx="0 5" font="bold 11"
+	grid 1 4 sticky=W  pady="0 10"
+		button text="Repo" bg=lightblue sticky=E function=.win.chooseProj action=chooseProj
+		button text="Code" bg=lightyellow sticky=E function=.win.chooseCode action=chooseCode
+		button text="Add"  bg=pink sticky=E function=.win.addCode action=addCode
+		button text="Edit" bg=moccasin sticky=E function=.win.editCode action=editCode
+	label text="Check R package using devtools/rhub" sticky=W padx="0 5" font="bold 11"
+	grid 1 2 sticky=W  pady="0 10"
+		button text="Check" width=5 bg=aliceblue sticky=E function=.win.check.release action=check
+		button text="Release" width=5 bg=lightblue1 sticky=E function=.win.check.release action=release
+
 #grid 4 1 sticky=""
 #
 #	grid 1 5 sticky=W

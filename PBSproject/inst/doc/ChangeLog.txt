@@ -4,9 +4,18 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
+0.0.2 (2022-11-15) [Rcheck=F Rbuild=F]
+  * R code
+    + Added `guiFuns.r' and modified other R code files.
+    + Enhanced the manipulation of user-specied options.
+  * Gadfly
+    + Too complicated (code is running ahead of design)
+
 0.0.1 (2022-11-04) [Rcheck=F Rbuild=F]
   * R code
     + Started PBSproject with modified functions from PBSadmb (RH 231104)
       - `projects.r', `optFuns.r', `utilFuns.r'
   * GUI code
     + Added `projectsWin.txt' and `PRJopts.txt'
+  * Gadfly
+    + Seems a bit too complicated but good first effort.

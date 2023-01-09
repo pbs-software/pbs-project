@@ -1,0 +1,4 @@
+projpath  "C:/Users/haighr/Files/Projects/R/Develop/PBSproject/package"
+batpath   "C:/Users/haighr/Files/Archive/Bat"
+unixbin   "C:/Apps/R/Rtools/bin"
+editor    "C:/Apps/UltraEdit/Uedit32.exe"

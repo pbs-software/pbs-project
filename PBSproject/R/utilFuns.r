@@ -142,7 +142,7 @@ suggestPath <- function(progs, ipath=NULL, file_ext=NULL, bat_ext=NULL)
 
 	ipath = paste( c(nPath(batpath), batpath.default), sep=file_sep)
 	ipath = gsub("\\\\|/", user_sep, ipath)
-	bat_sugg = suggestPath(progs="Rgui", ipath=ipath, bat_ext=".bat")
+	bat_sugg = suggestPath(progs="pandoc", ipath=ipath, bat_ext=".bat")
 	if (bat_sugg)
 		suggestions[["batpath"]] = gsub( paste(file_sep,"bin$",sep=ifelse(isWin,file_sep,"")), "", names(bat_sugg))
 	#else
