@@ -10,10 +10,12 @@ grid 2 1 sticky=W
 		button text=">" func=doAction action="selectFile(usewidget=\"editor\")"
 
 grid 3 1 sticky=W
-	label text="Package management" sticky=W padx="0 5" font="bold 11"
-	entry name=pkgname value="" label="Package name:" width=40 mode=character sticky=W pady="0 5" edit=TRUE
+	label text="Project management" sticky=W padx="0 5" font="bold 11"
+	grid 1 2 sticky=W
+		entry name=projname value="<new project name>" label="Project name:" width=30 mode=character sticky=W pady="0 5" edit=TRUE
+		check name=overwrite checked=T text="overwrite" action=overwrite
 	grid 1 5 sticky=W  pady="0 10"
-		button text=New bg=orange sticky=W function=.win.createNew action=createNew
+		button text=Start bg=orange sticky=W function=.win.createNew action=createNew
 		button text="Edit R" bg=lightblue sticky=W function=.win.editR action=editR
 		button text="Source R" bg=greenyellow sticky=W function=.win.sourceR action=sourceR
 		button text="Edit WDF" bg=lightblue sticky=W function=.win.editWin action=editWin

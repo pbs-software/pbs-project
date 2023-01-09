@@ -4,11 +4,18 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
+0.0.5 (2022-11-24) [Rcheck=F Rbuild=F]
+  * R code
+    + Refined the code further but still uses intermediary code sets.
+  * Gadfly
+    + Does not like initial master control GUI to create project GUIs.
+      - Would prefer a command line function 'createProject' to get the ball rolling.
+
 0.0.4 (2022-11-22) [Rcheck=F Rbuild=F]
   * R code
     + Refined the juggling of self-perpetuating GUIs but still required an intermediary set of R/GUI code.
   * Gadfly
-    + Does not like intermediary sets
+    + Does not like intermediary sets.
 
 0.0.3 (2022-11-17) [Rcheck=F Rbuild=F]
   * R code
