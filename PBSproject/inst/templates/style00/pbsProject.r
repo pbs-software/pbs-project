@@ -1,8 +1,18 @@
-## START TEMPLATE CODE
-#=================================================
+## Project: @projname
+##   R code (created: @date)
+## ===============================================
 
-## @projname -- R code (created: @date)
-## ===================================
+## START USER PROJECT CODE
+#=================================================
+## <insert user code here>
+#=================================================
+## END USER PROJECT CODE
+
+
+#=================================================
+## START TEMPLATE CODE (pbsProject.r)
+##  (hidden utility functions, style=0)
+#=================================================
 
 ## .win.setPBSext-----------------------2022-12-30
 ## Set extensions '.r' and '.txt' to open with 
@@ -39,15 +49,15 @@
 	}
 }
 
-## .win.createProject-------------------2022-12-29
-## Creat a new project specified in '@projname' window:
+## .win.openProject-------------------2023-01-10
+## Open a project specified in '@projname' window
 ## ---------------------------------------------RH
-.win.createProject = function(winName="@projname")
+.win.openProject = function(winName="@projname")
 {
 	getWinVal(scope="L",winName=winName)
 #print(c(projname,newprojname))
 #print(c(projpath,newprojpath))
-	if (.is.empty(newprojname) || newprojname=="<new project name>"){
+	if (.is.empty(newprojname) || newprojname=="<another project name>"){
 		if (overwrite)
 			mess = paste0("Supply a package name to create a new package.")
 		else
@@ -58,7 +68,7 @@
 		mess = paste0("Choose a new project name/path that is not the same as the current project name/path.")
 		showAlert(mess); stop(mess)
 	}
-	createProject(projname=newprojname, projpath=newprojpath, overwrite=overwrite)
+	openProject(projname=newprojname, projpath=newprojpath, create=overwrite)
 }
 
 ## .win.editR---------------------------2022-12-29
@@ -101,7 +111,7 @@
 .win.sourceR = function (winName="@projname")
 {
 	getWinVal(scope="L",winName=winName)
-	if (.is.empty(projname) || projname=="<new project name>"){
+	if (.is.empty(projname) || projname=="<another project name>"){
 		mess = paste0("Supply a package name to create a new package.")
 		showAlert(mess); stop(mess)
 	}
@@ -121,7 +131,7 @@
 .win.createWin = function (winName="@projname")
 {
 	getWinVal(scope="L",winName=winName)
-	if (.is.empty(projname) || projname=="<new project name>"){
+	if (.is.empty(projname) || projname=="<another project name>"){
 		mess = paste0("Supply a package name to create a new package.")
 		showAlert(mess); stop(mess)
 	}
@@ -142,7 +152,7 @@
 .win.refresh = function (winName="@projname")
 {
 	getWinVal(scope="L",winName=winName)
-	if (.is.empty(projname) || projname=="<new project name>"){
+	if (.is.empty(projname) || projname=="<another project name>"){
 		mess = paste0("Supply a package name to create a new package.")
 		showAlert(mess); stop(mess)
 	}
@@ -190,13 +200,6 @@
 #browser();return()
 	file.copy(from=x, to=bupfile, copy.date=TRUE)
 }
-
-
 #=================================================
 ## END TEMPLATE CODE
-
-## START USER'S PROJECT CODE
-#=================================================
-
-## Some user code...
 

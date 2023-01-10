@@ -4,6 +4,17 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
+0.0.7 (2023-01-10) [Rcheck=T Rbuild=T]
+  * First R package build for PBSproject
+  * R code
+    + Add new function `openProject'.
+    + Implemented stored options by user (using PBS options manager).
+    + Changed names of templates from `projectTemplate' to `pbsProject'.
+  * Documentation
+    + Added vignette called `PBSprojectIntro'
+    + Added Rd help files:
+      - `createProject.Rd', `openProject.Rd'
+
 0.0.6 (2022-12-30) [Rcheck=F Rbuild=F]
   * R code
     + Abandoned GUI control and implemented command line `createProject' that uses two template files ('projectTemplate.r' and 'projectTemplateWin.txt').
