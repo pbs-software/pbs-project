@@ -1,7 +1,6 @@
 ## =========================================================
-## R functions to manipulate projects and packages:
-##  createProject...Create new project (command line only)
-##  openProject.....Open an existing project
+## R function to create a project from the command line (RH 221230)
+## Function has been demoted to only creating new project files
 ## =========================================================
 
 ## createProject------------------------2023-01-10
@@ -71,11 +70,15 @@ createProject = function(projname="project", projpath=".", style="default", over
 #browser();return()
 		}
 	}
-	writePBSoptions(fname=oname)
-	invisible(return())
+	out = writePBSoptions(fname=oname)
+	invisible(out)
 }
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~createProject
 
+
+## =========================================================
+## R function to open a project from the command line (RH 230110)
+## =========================================================
 
 ## openProject--------------------------2023-01-10
 ##  Open an existing project
@@ -85,9 +88,11 @@ openProject = function(projname="project", projpath=".", create=FALSE)
 	rname = paste0(projpath,"/",projname,".r")
 	wname = paste0(projpath,"/",projname,"Win.txt")
 	oname = paste0(projpath, "/", projname,"Opts.txt")  ## stored user options 
-	if (file.exists(oname))
+	editor = NULL
+	if (file.exists(oname)) {
 		readPBSoptions(fname=oname)
-
+		editor = getPBSoptions()$editor
+	}
 	if (create || (!file.exists(rname) && !file.exists(wname)) ) {
 		createProject(projname=projname, projpath=projpath, overwrite=TRUE)
 		openProject(projname=projname, projpath=projpath)
@@ -97,11 +102,16 @@ openProject = function(projname="project", projpath=".", create=FALSE)
 			createWin(wname)
 			mess = paste0("Existing project '", projname, "' has been opened")
 			message(mess)
+			#editor = getWinVal()$editor
+			if (!is.null(editor) && editor!="" && editor != getWinVal()$editor) {
+#browser();return()
+				setWinVal(list(editor=editor))
+			}
 		} else {
 			mess = paste0("One of the project files (", projname, ".r or ", projname, "Win.txt) does not exist in working directory <", projpath, ">.")
 			showAlert(mess); stop(mess)
 		}
 	}
+	.win.setPBSopt()  ## use editor in GUI to set extensions, remember editor, and write an options file
 }
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~openProject
-

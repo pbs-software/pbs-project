@@ -14,39 +14,29 @@
 ##  (hidden utility functions, style=0)
 #=================================================
 
-## .win.setPBSext-----------------------2022-12-30
+## .win.setPBSopt-----------------------2023-01-12
 ## Set extensions '.r' and '.txt' to open with 
 ## editor displayed in GUI.
+## Remember editor and write all options to file.
+## Renamed '.win.setPBSext' to '.win.setPBSopt' (RH 230112)
 ## ---------------------------------------------RH
-.win.setPBSext = function(winName="@projname")
+.win.setPBSopt = function(winName="@projname")
 {
 	getWinVal(scope="L",winName=winName)
-	mess = c(
-		paste0("setPBSext('r','\"", getWinVal()$editor, "\" %f')"),
-		paste0("setPBSext('txt','\"", getWinVal()$editor, "\" %f')")
+	## Check that editor exists
+	if (!file.exists(editor)) {
+		mess = paste0("Specified editor: '", editor, "'\n   does not exist. Select another.")
+		showAlert(mess); stop(mess)
+	}
+	setPBSoptions("editor", editor)
+	mess = c( ## could be other extensions in future:
+		paste0("setPBSext('r','\"", editor, "\" %f')"),
+		paste0("setPBSext('txt','\"", editor, "\" %f')")
 	)
 	eval(parse(text=paste0(mess, collapse="; ")))
-}
-
-## .win.clearMost-----------------------2022-12-29
-## Clear objects in Global environment
-## ---------------------------------------------RH
-.win.clearMost = function(keep=c(".First",".Random.seed",".SavedPlots","clr","clr.rgb","qu","so"))
-{
-	getWinVal(scope="L",winName="@projname")
-	act = getWinAct(winName="@projname")[1]
-	all.objs = ls(all.names=hidden, pos=.GlobalEnv)
-	rm.objs = setdiff(all.objs,keep)
-	mess = paste0(strwrap(paste0(rm.objs, collapse=", "),80),collapse="\n")
-	if (act=="ls") {
-		mess = paste0("\nFollowing objects are available in Global environment:\n", mess )
-		message(mess)
-	} else if (act=="clear"){
-		packList(rm.objs, target="removed.objects")  ## save to PBSmodelling environment just in case needed later
-		mess = paste0("\nFollowing objects were removed from Global environment:\n", mess )
-		rm(list=rm.objs, envir=.GlobalEnv)
-		message(mess)
-	}
+	oname = paste0(projpath, "/", projname,"Opts.txt")  ## stored user options 
+	out   = writePBSoptions(fname=oname)
+	invisible(out)
 }
 
 ## .win.openProject-------------------2023-01-10
@@ -175,31 +165,28 @@
 }
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.win.refresh
 
-## .is.empty----------------------------2022-11-22
-##  Check whether string is empty or NULL.
+
+## .win.clearMost-----------------------2022-12-29
+## Clear objects in Global environment
 ## ---------------------------------------------RH
-.is.empty = function(x)
+.win.clearMost = function(keep=c(".First",".Random.seed",".SavedPlots","clr","clr.rgb","qu","so"))
 {
-	if (is.null(x) || all(is.na(x)) || length(x)==0 || all(x==""))
-		return(TRUE)
-	else
-		return(FALSE)
+	getWinVal(scope="L",winName="@projname")
+	act = getWinAct(winName="@projname")[1]
+	all.objs = ls(all.names=hidden, pos=.GlobalEnv)
+	rm.objs = setdiff(all.objs,keep)
+	mess = paste0(strwrap(paste0(rm.objs, collapse=", "),80),collapse="\n")
+	if (act=="ls") {
+		mess = paste0("\nFollowing objects are available in Global environment:\n", mess )
+		message(mess)
+	} else if (act=="clear"){
+		packList(rm.objs, target="removed.objects")  ## save to PBSmodelling environment just in case needed later
+		mess = paste0("\nFollowing objects were removed from Global environment:\n", mess )
+		rm(list=rm.objs, envir=.GlobalEnv)
+		message(mess)
+	}
 }
 
-## .do.backup---------------------------2022-12-30
-##  Make copies of specified file x to subdirectory 'backup'.
-## ---------------------------------------------RH
-.do.backup = function(x, timestamp)
-{
-	bupdir  = paste0(dirname(x),"/backup/")
-	if (!dir.exists(bupdir))
-		dir.create(bupdir)
-	if (missing(timestamp))
-		timestamp = paste0("-(", gsub(":",".", gsub(" ","_", Sys.time())) ,")")
-	bupfile = paste0(bupdir, sub("(Win)?\\.(r|txt)", paste0("\\1", timestamp, ".\\2"), basename(x)))
-#browser();return()
-	file.copy(from=x, to=bupfile, copy.date=TRUE)
-}
 #=================================================
 ## END TEMPLATE CODE
 

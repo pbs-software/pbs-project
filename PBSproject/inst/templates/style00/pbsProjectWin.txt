@@ -1,8 +1,9 @@
+## =============================================================================
 ## Project: @projname
 ##   Windows description file (created: @date)
 ##   Default style = 0
-## =====================================================
-window name="@projname" title="Development of Project: @projname" #onclose=not used
+## =============================================================================
+window name="@projname" title="Development of Project: @projname" onclose=.win.setPBSopt
 
 # Menu Items--------------------------------------------------------------------
 #menu nitems=1 label="Help"
@@ -51,7 +52,7 @@ grid 2 1 sticky=W pady="5 0" #sidetitle="Utilities" sidefont="bold 20"
 		label text="Utils" sticky=W padx="0 5" font="bold 10"
 		entry name=editor value="C:/Apps/UltraEdit/Uedit32.exe" label=Editor: width=42 mode=character func=setGUIoptions action=editor
 		button text=">" func=doAction action="selectFile(usewidget=\"editor\")"
-		button text="Set" bg=green func=.win.setPBSext
+		button text="Set" bg=green func=.win.setPBSopt
 	grid 1 4 sticky=E
 		label text="Global Env objects:" sticky=W padx="0 5"
 		button text="List" fg=blue bg=aliceblue sticky=W function=.win.clearMost action=ls

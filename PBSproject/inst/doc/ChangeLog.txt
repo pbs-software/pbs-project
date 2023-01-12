@@ -4,6 +4,14 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
+0.0.8 (2023-01-12) [Rcheck=F Rbuild=F]
+  * R code
+    + Updated code to remember user choices through the PBS options manager. (RH 230112)
+      - Changed function name `.win.setPBSext' to `.win.setPBSopt'.
+      - Code checks output options file `<project>Opts.txt' for previous settings.
+    + Moved non-GUI dot functions from template file `pbsProject.r' to main function set `projectFuns.r'
+      - functions moved: `.is.empty' and `do.backup'
+
 0.0.7 (2023-01-10) [Rcheck=T Rbuild=T]
   * First R package build for PBSproject
   * R code

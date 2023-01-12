@@ -2,6 +2,8 @@
 exportPattern("^[^\\.]")
 
 exportPattern("^\\.PBS")
+exportPattern("^\\.do\\.")
+exportPattern("^\\.is\\.")
 
 # Packages declared in the 'Depends' field should not also be in the 'Imports' field (I guess in DESCRIPTION file only) (from R-exts.pdf).
 import(

@@ -16,16 +16,18 @@
 -----------------------------------------------------------
 PBS Project ", pkg_info$Version, " -- Copyright (C) 2022-",year," Fisheries and Oceans Canada
 
-To create a new project:
-   createProject(projname=\"project\", projpath=\".\")
-To open a project:
-   openProject(projname=\"project\", projpath=\".\")
-
 Packaged on ", pkg_date, "
 Pacific Biological Station, Nanaimo
 
 All available PBS packages can be found at
 https://github.com/pbs-software
+
+To create a new project:
+   createProject(projname=\"project\", projpath=\".\")
+
+To open a project:
+   openProject(projname=\"project\", projpath=\".\")
+
 -----------------------------------------------------------
 
 ")
@@ -37,7 +39,7 @@ https://github.com/pbs-software
 # No Visible Bindings
 # ===================
 if(getRversion() >= "2.15.1") utils::globalVariables(names=c(
-#	".",
+	".win.setPBSopt",
 #	"A",
 #	"B",
 	"createWin",

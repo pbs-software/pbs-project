@@ -1,18 +1,19 @@
 Package: PBSproject
-Version: 0.0.7
-Date:    2023-01-10
-Title:   Tools for Managing Projects and Pacakages
+Version: 0.0.8
+Date:    2023-01-12
+Title:   Tools for Managing Projects and Packages
 Authors@R: c(
    person("Rowan", "Haigh", role = c("aut", "cre"), email = "rowan.haigh@dfo-mpo.gc.ca"),
-   person(c("Jon", "T."), "Schnute", role = "ctb", email = "schnutej-dfo@shaw.ca")
+   person(c("Jon", "T."), "Schnute", role = "ctb", email = "schnutej@shaw.ca")
    )
 Author:      Rowan Haigh [aut, cre], Jon T. Schnute [ctb]
 Maintainer:  Rowan Haigh <rowan.haigh@dfo-mpo.gc.ca>
 Copyright:   2022-2023, Fisheries and Oceans Canada
 Depends:     R (>= 3.5.0), PBSmodelling
 Description: A management system for projects, packages, and portfolios.
-   The user will be delighted by graphical user interfaces that offer
-   an assortment of styles from which to choose.
+   The user will be delighted by a graphical user interface (GUI) that
+   offers control over a project collection. Future developments might
+   include an assortment of styles from which to create the GUI.
 License: GPL (>= 2)
 URL: https://github.com/pbs-software/pbs-project,
      https://github.com/pbs-software/pbs-modelling
