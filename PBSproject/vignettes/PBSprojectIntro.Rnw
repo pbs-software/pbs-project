@@ -8,7 +8,8 @@
 
 % Keep on one page
 \usepackage[letterpaper, top=0.5in, bottom=0.5in, left=1in, right=1in, footskip=0in, headheight=0.5in]{geometry}
-%\textheight 9.5in \topmargin -1.0in
+\setlength\parindent{0pt}               %% To not indent paragraphs.
+\setlength{\parskip}{6pt plus 6pt minus 3pt}
 
 \usepackage[scaled=1.1]{inconsolata} %% trial and error
 \renewcommand{\rmdefault}{phv}% Helvetica
@@ -47,18 +48,25 @@
 The package uses tools offered in \pbsm{} to manipulate project files using a graphical user interface (GUI).
 Although this package depends heavily on the R interface to \tcl{}, a user does not need to know \tcl{}.
 
+Future development will look towards package creation and various styles of GUIs.
+
+To see the development site, navigate to \href{https://github.com/pbs-software/pbs-project}{PBSproject on GitHub}.
+
 \section{What is PBS?}
 
-The initials `PBS' refer to the \href{http://www.pac.dfo-mpo.gc.ca/science/facilities-installations/index-eng.html#pbs}{Pacific Biological Station}, a major fisheries laboratory operated by by Fisheries and Oceans Canada on the Pacific coast in Nanaimo, British Columbia, Canada. 
+The initials `PBS' refer to the \href{https://www.pac.dfo-mpo.gc.ca/science/facilities-installations/index-eng.html#pbs}{Pacific Biological Station}, a major fisheries laboratory operated by by Fisheries and Oceans Canada on the Pacific coast in Nanaimo, British Columbia, Canada. 
 
-%\section{Where is the User's Guide?}
+\section{Where is the User's Guide?}
+
+At present, there is no User's Guide for PBSproject. 
+In the mean time, please consult PBSmodelling's User Guide for information on manipulating GUI widgets located at:\\
+\code{system.file("doc/PBSmodelling-UG.pdf", package="PBSmodelling")}\\
+Or, simply issue the command: \code{`openUG()'}.
 %
 %The R directory \code{../library/PBSproject/doc} includes a complete User's Guide\\
 %\code{PBSproject-UG.pdf}.
 %To use this package effectively, please consult the guide.
 %We update the package more frequently than we update the User's Guide. 
-%To see our development site, navigate to 
-%\href{https://github.com/pbs-software/pbs-modelling}{PBSproject on GitHub}.
 %
 %\section{Demos}
 %

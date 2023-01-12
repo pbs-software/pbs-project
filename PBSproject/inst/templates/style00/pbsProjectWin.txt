@@ -37,38 +37,40 @@ menu nitems=2 label="Online"
 #	menuitem label=About function=doAction action="editADfile(paste(system.file(package=`PBSadmb`),`/DESCRIPTION`,sep=``))"
 
 # Information-------------------------------------------------------------------
-grid 1 6 sticky=E
-	label text="Files:" sticky=W padx="0 2"
-	button text="Open" bg=moccasin func=doAction action="openFile(``)"
-	button text="UG"   bg=moccasin func=doAction action="openUG(pkg=`PBSmodelling`)"
-	label text="Templates:" sticky=W padx="5 2"
-	button text="R"   bg=gold func=doAction action="openFile(getPBSoptions()$template$rfile)"
-	button text="WDF" bg=gold func=doAction action="openFile(getPBSoptions()$template$wfile)"
+grid 1 2 sticky=W
+	label text="Utilities" sticky=W padx="0 65" font="bold 10"
+	grid 1 6 sticky=E
+		label text="Files:" sticky=W padx="0 2"
+		button text="Open" bg=moccasin func=doAction action="openFile(``)"
+		button text="UG"   bg=moccasin func=doAction action="openUG(pkg=`PBSmodelling`)"
+		label text="Templates:" sticky=W padx="5 2"
+		button text="R"   bg=gold func=doAction action="openFile(getPBSoptions()$template$rfile)"
+		button text="WDF" bg=gold func=doAction action="openFile(getPBSoptions()$template$wfile)"
 
 
 # Utilities---------------------------------------------------------------------
 grid 2 1 sticky=W pady="5 0" #sidetitle="Utilities" sidefont="bold 20"
-	grid 1 4  sticky=W
-		label text="Utils" sticky=W padx="0 5" font="bold 10"
+	grid 1 3  sticky=W
+		#label text="Utils" sticky=W padx="0 5" font="bold 10"
 		entry name=editor value="C:/Apps/UltraEdit/Uedit32.exe" label=Editor: width=42 mode=character func=setGUIoptions action=editor
 		button text=">" func=doAction action="selectFile(usewidget=\"editor\")"
 		button text="Set" bg=green func=.win.setPBSopt
 	grid 1 4 sticky=E
 		label text="Global Env objects:" sticky=W padx="0 5"
 		button text="List" fg=blue bg=aliceblue sticky=W function=.win.clearMost action=ls
-		button text="Clear" fg=red bg=lemonchiffon sticky=W function=.win.clearMost action=clear
+		button text="Clear" fg=red bg=mistyrose sticky=W function=.win.clearMost action=clear
 		check name=hidden checked=F text="+hidden" action=hidden
 
-label text="------------------------------------------------" sticky=E font="courier 10"
+grid 1 2 sticky=W
+	label text="Project" sticky=W font="bold 10"
+	label text="-----------------------------------------" sticky=W font="courier 8"
 
 # Management--------------------------------------------------------------------
 grid 3 1 sticky=W
 	grid 1 2 sticky=W
-		label text="Curr\nProj" sticky=W font="bold 10"
-		grid 1 2 sticky=W
-			entry name=projname value="@projname" label="Name:" width=12 mode=character sticky=E pady="0 0" edit=TRUE
-			entry name=projpath value="@projpath" label="Path:" width=33 mode=character sticky=E pady="0 0" edit=FALSE noeditbg=thistle1
-	grid 1 4 sticky=E  pady="0 10"
+		entry name=projname value="@projname" label="Name:" width=22 mode=character sticky=E pady="0 0" edit=TRUE
+		entry name=projpath value="@projpath" label="Path:" width=21 mode=character sticky=E pady="0 0" edit=FALSE noeditbg=aliceblue
+	grid 1 4 sticky=E padx="0 5" pady="0 5"
 		button text="Edit R" bg=lightblue sticky=W function=doAction action=".win.editR(winName=`@projname`)"
 		button text="Source R" bg=greenyellow sticky=W function=doAction action=".win.sourceR(winName=`@projname`)"
 		button text="Edit WDF" bg=lightblue sticky=W function=doAction action=".win.editWin(winName=`@projname`)"
@@ -76,7 +78,7 @@ grid 3 1 sticky=W
 	grid 1 5 sticky=W relief=groove borderwidth=2 pady="5 0"
 		button text=Open bg=tan1 sticky=W function=.win.openProject action=openProject
 		entry name=newprojname value="<another project name>" label=NULL width=22 mode=character sticky=W pady="0 0" edit=TRUE action=newprojname
-		entry name=newprojpath value="." label="Path:" width=18 mode=character sticky=W pady="0 0" edit=TRUE func=setGUIoptions action="newprojpath"
+		entry name=newprojpath value="." label="Path:" width=10 mode=character sticky=W pady="0 0" edit=TRUE func=setGUIoptions action="newprojpath"
 		button text=">" func=doAction action="selectDir(usewidget=\"newprojpath\")" 
-		check name=overwrite checked=F text="New" action=overwrite
+		check name=overwrite checked=F text="New" action=overwrite font="8"
 

@@ -1,5 +1,5 @@
 Package: PBSproject
-Version: 0.0.8
+Version: 0.0.9
 Date:    2023-01-12
 Title:   Tools for Managing Projects and Packages
 Authors@R: c(

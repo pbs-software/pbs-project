@@ -4,12 +4,22 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
-0.0.8 (2023-01-12) [Rcheck=F Rbuild=F]
+0.0.9 (2023-01-12) [Rcheck=T Rbuild=T]
+  * R code
+    + Moved the common dot functions in projects to a separate template file `dotProject.r' under `./templates/rcode'.
+    + The template file `pbsProject.r' is now largely empty but could be filled with functions specific to style 0 (default).
+    + Both files (`pbsProject.r' and `dotProject.r') are merged in the function `createProject' to appear as previously.
+  * GUI code
+    + Updated the template GUI to appear more compact (less wasted space).
+  * Documentation
+    + Modified the introduction vignette `PBSprojectIntro.Rnw' (and `.pdf').
+
+0.0.8 (2023-01-12) [Rcheck=T Rbuild=T]
   * R code
     + Updated code to remember user choices through the PBS options manager. (RH 230112)
       - Changed function name `.win.setPBSext' to `.win.setPBSopt'.
       - Code checks output options file `<project>Opts.txt' for previous settings.
-    + Moved non-GUI dot functions from template file `pbsProject.r' to main function set `projectFuns.r'
+    + Moved non-GUI dot functions from template file `pbsProject.r' to main function set `dotFuns.r'
       - functions moved: `.is.empty' and `do.backup'
 
 0.0.7 (2023-01-10) [Rcheck=T Rbuild=T]

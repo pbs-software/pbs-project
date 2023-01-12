@@ -1,9 +1,9 @@
 ## =========================================================
-## R function to create a project from the command line (RH 221230)
-## Function has been demoted to only creating new project files
+## R function to create a project from the command line.
+## Function has been demoted to only creating new project files.
 ## =========================================================
 
-## createProject------------------------2023-01-10
+## createProject------------------------2023-01-12
 ##  Create new project (JTS wants non-GUI start-up function)
 ## ---------------------------------------------RH
 createProject = function(projname="project", projpath=".", style="default", overwrite=TRUE)
@@ -28,8 +28,9 @@ createProject = function(projname="project", projpath=".", style="default", over
 	} else {
 		## Create new R and WDF from the templates
 		tmpldir = system.file(paste0("templates/style", ifelse(style=="default","00",pad0(style,2))), package="PBSproject")
-		if (tmpldir=="")
-			tmpldir = getwd()  ## temporary until package is built
+		rdotdir = system.file("templates/rcode", package="PBSproject")
+		if (tmpldir=="" || rdotdir=="")
+			tmpldir = rdotdir = getwd()  ## temporary for development and debugging
 		setPBSoptions("template", list(style=style, tmpldir=tmpldir))
 
 		for (i in rtargs) {
@@ -37,18 +38,22 @@ createProject = function(projname="project", projpath=".", style="default", over
 			## Create R code form 'pbsProject.r'
 			if (grepl("\\.[rR]$", ii)) {
 				rbase = paste0(tmpldir, "/pbsProject.r")
-				if (!file.exists(rbase)){
-					mess = paste0("R code file\n'", rbase, "'\n   does not exist in current working directory.")
+				rdots = paste0(rdotdir, "/dotProject.r")
+				mess = NULL
+				if (!file.exists(rbase) || !file.exists(rdots)){
+					if (!file.exists(rbase))
+						mess = c(mess, paste0("R code file\n'", rbase, "'\n   does not exist in template directory.\n"))
+					if (!file.exists(rdots))
+						mess = c(mess, paste0("R code file\n'", rdots, "'\n   does not exist in template directory.\n"))
 					showAlert(mess); stop(mess)
 				}
-				rcode = readLines(con=rbase)
+				rcode = c(readLines(con=rbase), readLines(con=rdots))
 				pline = setdiff( grep("@projname",rcode), grep("STATIC",rcode) ) ## STATIC -- no longer used after PBSproject v.0.0.5
 				dline = setdiff( grep("@date",rcode), grep("STATIC",rcode) )     ## STATIC
 				uline = union(pline,dline)
 				rcode[uline] = gsub("@projname", projname, sub("@date", Sys.time(), rcode[uline])) ## STATIC
 				#rcode = rcode[-(rev(grep("END CODE",rcode))[1]:length(rcode))]  ## remove recursive calls
 				writeLines(text=rcode, con=i)
-#browser();return()
 				setPBSoptions("template", list(rfile=rbase), sublist=TRUE)
 			}
 			## Create Windows Description file
@@ -67,7 +72,6 @@ createProject = function(projname="project", projpath=".", style="default", over
 				writeLines(text=wcode, con=i)
 				setPBSoptions("template", list(wfile=wbase), sublist=TRUE)
 			}
-#browser();return()
 		}
 	}
 	out = writePBSoptions(fname=oname)
@@ -77,10 +81,10 @@ createProject = function(projname="project", projpath=".", style="default", over
 
 
 ## =========================================================
-## R function to open a project from the command line (RH 230110)
+## R function to open a project from the command line.
 ## =========================================================
 
-## openProject--------------------------2023-01-10
+## openProject--------------------------2023-01-12
 ##  Open an existing project
 ## ---------------------------------------------RH
 openProject = function(projname="project", projpath=".", create=FALSE)
@@ -102,16 +106,15 @@ openProject = function(projname="project", projpath=".", create=FALSE)
 			createWin(wname)
 			mess = paste0("Existing project '", projname, "' has been opened")
 			message(mess)
-			#editor = getWinVal()$editor
 			if (!is.null(editor) && editor!="" && editor != getWinVal()$editor) {
-#browser();return()
 				setWinVal(list(editor=editor))
 			}
 		} else {
-			mess = paste0("One of the project files (", projname, ".r or ", projname, "Win.txt) does not exist in working directory <", projpath, ">.")
+			mess = paste0("One of the project files (", projname, ".r or ", projname, "Win.txt) does not exist\n   in the working directory <", projpath, ">.")
 			showAlert(mess); stop(mess)
 		}
 	}
 	.win.setPBSopt()  ## use editor in GUI to set extensions, remember editor, and write an options file
 }
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~openProject
+

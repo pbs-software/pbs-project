@@ -27,7 +27,6 @@ To create a new project:
 
 To open a project:
    openProject(projname=\"project\", projpath=\".\")
-
 -----------------------------------------------------------
 
 ")
