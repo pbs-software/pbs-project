@@ -4,6 +4,16 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
+0.1.0 (2023-01-16) [Rcheck=T Rbuild=T]
+  * R code
+    + Changed the default name of the project from 'project' to 'newproject'. (RH 230116)
+  * GUI code
+    + Updated the template GUI (RH 230116).
+      - Removed 'Set' button for editor; navigating to a new program now sets the editor automatically.
+      - Changed information buttons along the top.
+  * Documentation
+    + Added new PDF to show the various components of the GUI. (RH 230116)
+
 0.0.9 (2023-01-12) [Rcheck=T Rbuild=T]
   * R code
     + Moved the common dot functions in projects to a separate template file `dotProject.r' under `./templates/rcode'.
@@ -20,7 +30,7 @@ Authors:  JTS = Jon T. Schnute
       - Changed function name `.win.setPBSext' to `.win.setPBSopt'.
       - Code checks output options file `<project>Opts.txt' for previous settings.
     + Moved non-GUI dot functions from template file `pbsProject.r' to main function set `dotFuns.r'
-      - functions moved: `.is.empty' and `do.backup'
+      - functions moved: `.is.empty' and `.do.backup'
 
 0.0.7 (2023-01-10) [Rcheck=T Rbuild=T]
   * First R package build for PBSproject

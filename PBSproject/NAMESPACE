@@ -1,6 +1,7 @@
-# Export all names from PBSproject
+# Export all functions that do NOT begin with a dot (period)
 exportPattern("^[^\\.]")
 
+# Export dot functions by action (explicit list just to keep track)
 exportPattern("^\\.PBS")
 exportPattern("^\\.do\\.")
 exportPattern("^\\.is\\.")

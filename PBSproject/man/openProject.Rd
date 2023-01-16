@@ -6,7 +6,7 @@
   Alternatively open a GUI from any project created before \code{'PBSproject'}; however, functionality of the GUI's widgets may be broken.
 }
 \usage{
-openProject(projname="project", projpath=".", create=FALSE)
+openProject(projname="testproject", projpath=".", create=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,7 +27,7 @@ openProject(projname="project", projpath=".", create=FALSE)
   Maintainer: \href{mailto:rowan.haigh@dfo-mpo.gc.ca}{Rowan Haigh}, Program Head -- Offshore Rockfish\cr
   Pacific Biological Station (PBS), Fisheries & Oceans Canada (DFO), Nanaimo BC\cr
   \emph{locus opus}: Regional Headquarters (RHQ), Vancouver BC\cr
-  Last modified \code{Rd: 2023-01-10}
+  Last modified \code{Rd: 2023-01-16}
 }
 \note{
   The function keeps track of certain options using the PBS options manager. 
@@ -44,7 +44,7 @@ In package \pkg{PBSmodelling}:\cr
 }
 \examples{
 \dontrun{
-  openProject(projname="project", projpath=".")
+  openProject(projname="testproject", projpath=".")
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

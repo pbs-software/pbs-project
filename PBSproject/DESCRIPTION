@@ -1,6 +1,6 @@
 Package: PBSproject
-Version: 0.0.9
-Date:    2023-01-12
+Version: 0.1.0
+Date:    2023-01-16
 Title:   Tools for Managing Projects and Packages
 Authors@R: c(
    person("Rowan", "Haigh", role = c("aut", "cre"), email = "rowan.haigh@dfo-mpo.gc.ca"),

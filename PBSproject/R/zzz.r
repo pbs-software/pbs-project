@@ -23,10 +23,10 @@ All available PBS packages can be found at
 https://github.com/pbs-software
 
 To create a new project:
-   createProject(projname=\"project\", projpath=\".\")
+   createProject(projname=\"testproject\", projpath=\".\")
 
 To open a project:
-   openProject(projname=\"project\", projpath=\".\")
+   openProject(projname=\"testproject\", projpath=\".\")
 -----------------------------------------------------------
 
 ")

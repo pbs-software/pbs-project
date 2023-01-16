@@ -5,7 +5,7 @@
   Create a project by making new files (e.g., \code{'project.r'} and \code{'projectWin.txt'}) from templates defined by the \code{'style'} argument.
 }
 \usage{
-createProject(projname="project", projpath=".", style="default", overwrite=TRUE)
+createProject(projname="testproject", projpath=".", style="default", overwrite=TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -28,7 +28,7 @@ createProject(projname="project", projpath=".", style="default", overwrite=TRUE)
   Maintainer: \href{mailto:rowan.haigh@dfo-mpo.gc.ca}{Rowan Haigh}, Program Head -- Offshore Rockfish\cr
   Pacific Biological Station (PBS), Fisheries & Oceans Canada (DFO), Nanaimo BC\cr
   \emph{locus opus}: Regional Headquarters (RHQ), Vancouver BC\cr
-  Last modified \code{Rd: 2023-01-10}
+  Last modified \code{Rd: 2023-01-16}
 }
 \note{
   The function keeps track of certain options using the PBS options manager. 
@@ -45,7 +45,7 @@ In package \pkg{PBSmodelling}:\cr
 }
 \examples{
 \dontrun{
-  createProject(projname="project", projpath=".", overwrite=TRUE)
+  createProject(projname="testproject", projpath=".", overwrite=TRUE)
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

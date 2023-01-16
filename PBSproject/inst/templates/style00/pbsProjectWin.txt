@@ -38,23 +38,26 @@ menu nitems=2 label="Online"
 
 # Information-------------------------------------------------------------------
 grid 1 2 sticky=W
-	label text="Utilities" sticky=W padx="0 65" font="bold 10"
+	label text="Utilities" sticky=W padx="0 5" font="bold 10"
 	grid 1 6 sticky=E
-		label text="Files:" sticky=W padx="0 2"
-		button text="Open" bg=moccasin func=doAction action="openFile(``)"
-		button text="UG"   bg=moccasin func=doAction action="openUG(pkg=`PBSmodelling`)"
-		label text="Templates:" sticky=W padx="5 2"
-		button text="R"   bg=gold func=doAction action="openFile(getPBSoptions()$template$rfile)"
-		button text="WDF" bg=gold func=doAction action="openFile(getPBSoptions()$template$wfile)"
+		label text="Info:" sticky=W padx="0 2"
+		button text="GUI"       bg=lightgoldenrodyellow func=doAction action="openFile(`doc/PBSproject_GUI.pdf`,package=`PBSproject`)" font="8"
+		button text="R PBSproj" bg=lightgoldenrodyellow func=doAction action="help(package=`PBSproject`)" font="8"
+		button text="R PBSmod"  bg=lightgoldenrodyellow func=doAction action="help(package=`PBSmodelling`)" font="8"
+		button text="UG PBSmod" bg=lightgoldenrodyellow func=doAction action="openUG(pkg=`PBSmodelling`)" font="8"
+		button text="Browse"    bg=lightgoldenrodyellow func=doAction action="openFile(``)" font="8"
+		#label text="Templates:" sticky=W padx="5 2"
+		#button text="R"   bg=gold func=doAction action="openFile(getPBSoptions()$template$rfile)"
+		#button text="WDF" bg=gold func=doAction action="openFile(getPBSoptions()$template$wfile)"
 
 
 # Utilities---------------------------------------------------------------------
 grid 2 1 sticky=W pady="5 0" #sidetitle="Utilities" sidefont="bold 20"
-	grid 1 3  sticky=W
+	grid 1 2  sticky=W
 		#label text="Utils" sticky=W padx="0 5" font="bold 10"
-		entry name=editor value="C:/Apps/UltraEdit/Uedit32.exe" label=Editor: width=42 mode=character func=setGUIoptions action=editor
-		button text=">" func=doAction action="selectFile(usewidget=\"editor\")"
-		button text="Set" bg=green func=.win.setPBSopt
+		entry name=editor value="C:/Apps/UltraEdit/Uedit32.exe" label=Editor: width=45 mode=character func=setGUIoptions action=editor
+		button text=">" func=doAction action="selectFile(usewidget=\"editor\"); .win.setPBSopt()"
+		#button text="Set" bg=green func=.win.setPBSopt
 	grid 1 4 sticky=E
 		label text="Global Env objects:" sticky=W padx="0 5"
 		button text="List" fg=blue bg=aliceblue sticky=W function=.win.clearMost action=ls
@@ -62,8 +65,9 @@ grid 2 1 sticky=W pady="5 0" #sidetitle="Utilities" sidefont="bold 20"
 		check name=hidden checked=F text="+hidden" action=hidden
 
 grid 1 2 sticky=W
-	label text="Project" sticky=W font="bold 10"
-	label text="-----------------------------------------" sticky=W font="courier 8"
+	label text="Current Project" sticky=W font="bold 10"
+	#label text="-----------------------------------------" sticky=W font="courier 8"
+	label text="----------------------------------" sticky=W font="courier 8"
 
 # Management--------------------------------------------------------------------
 grid 3 1 sticky=W

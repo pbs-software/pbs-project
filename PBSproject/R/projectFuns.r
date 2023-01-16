@@ -3,10 +3,10 @@
 ## Function has been demoted to only creating new project files.
 ## =========================================================
 
-## createProject------------------------2023-01-12
+## createProject------------------------2023-01-16
 ##  Create new project (JTS wants non-GUI start-up function)
 ## ---------------------------------------------RH
-createProject = function(projname="project", projpath=".", style="default", overwrite=TRUE)
+createProject = function(projname="testproject", projpath=".", style="default", overwrite=TRUE)
 {
 	rtargs = paste0(projpath, "/", projname, c(".r","Win.txt"))
 	oname  = paste0(projpath, "/", projname,"Opts.txt")  ## stored user options 
@@ -20,7 +20,7 @@ createProject = function(projname="project", projpath=".", style="default", over
 			createWin(wnew)
 			mess = paste0("Existing project '", projname, " has been opened")
 			message(mess)
-			#openProject(projname="project", projpath=".")
+			#openProject(projname="testproject", projpath=".")
 		} else {
 			mess = paste0("Project '", projname, "' files (", projname, ".r, ", projname, "Win.txt) do not exist in working directory <", projpath, ">.")
 			showAlert(mess); stop(mess)
@@ -84,10 +84,10 @@ createProject = function(projname="project", projpath=".", style="default", over
 ## R function to open a project from the command line.
 ## =========================================================
 
-## openProject--------------------------2023-01-12
+## openProject--------------------------2023-01-16
 ##  Open an existing project
 ## ---------------------------------------------RH
-openProject = function(projname="project", projpath=".", create=FALSE)
+openProject = function(projname="testproject", projpath=".", create=FALSE)
 {
 	rname = paste0(projpath,"/",projname,".r")
 	wname = paste0(projpath,"/",projname,"Win.txt")
