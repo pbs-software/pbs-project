@@ -1,12 +1,12 @@
 Package: PBSproject
-Version: 0.1.0
-Date:    2023-01-16
+Version: 0.1.1
+Date:    2023-06-22
 Title:   Tools for Managing Projects and Packages
 Authors@R: c(
    person("Rowan", "Haigh", role = c("aut", "cre"), email = "rowan.haigh@dfo-mpo.gc.ca"),
-   person(c("Jon", "T."), "Schnute", role = "ctb", email = "schnutej@shaw.ca")
+   person(c("Jon", "T."), "Schnute", role = "aut", email = "schnutej@shaw.ca")
    )
-Author:      Rowan Haigh [aut, cre], Jon T. Schnute [ctb]
+Author:      Rowan Haigh [aut, cre], Jon T. Schnute [aut]
 Maintainer:  Rowan Haigh <rowan.haigh@dfo-mpo.gc.ca>
 Copyright:   2022-2023, Fisheries and Oceans Canada
 Depends:     R (>= 3.5.0), PBSmodelling

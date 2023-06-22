@@ -1,4 +1,4 @@
-\documentclass[letter,11pt]{article}
+\documentclass[letterpaper,11pt]{article}
 %\VignetteIndexEntry{Introduction to PBSmodelling}
 %\VignettePackage{PBSmodelling}
 \usepackage{Sweave}
@@ -8,7 +8,7 @@
 
 % Keep on one page
 \usepackage[letterpaper, top=0.5in, bottom=0.5in, left=1in, right=1in, footskip=0in, headheight=0.5in]{geometry}
-\setlength\parindent{0pt}               %% To not indent paragraphs.
+\setlength\parindent{0pt}  %% To not indent paragraphs.
 \setlength{\parskip}{6pt plus 6pt minus 3pt}
 
 \usepackage[scaled=1.1]{inconsolata} %% trial and error
@@ -61,6 +61,7 @@ The initials `PBS' refer to the \href{https://www.pac.dfo-mpo.gc.ca/science/faci
 At present, there is no User's Guide for PBSproject. 
 In the mean time, please consult PBSmodelling's User Guide for information on manipulating GUI widgets located at:\\
 \code{system.file("doc/PBSmodelling-UG.pdf", package="PBSmodelling")}\\
+%\Sexpr{system.file("doc/PBSmodelling-UG.pdf", package="PBSmodelling")}\\
 Or, simply issue the command: \code{`openUG()'}.
 %
 %The R directory \code{../library/PBSproject/doc} includes a complete User's Guide\\
@@ -77,6 +78,5 @@ Or, simply issue the command: \code{`openUG()'}.
 \vspace*{4ex} \noindent {\bf \Large Reference}
 
 \vspace*{2ex} \noindent Schnute, J.T., Couture-Beil, A., Haigh, R., and Kronlund, A.R. 2023. PBSmodelling 2.69.0 user's guide \red{revised from} \ital{Canadian Technical Report of Fisheries and Aquatic Sciences} \bold{2674} (2006). viii + 82~pp. Last updated January 5, 2023.
-
 
 \end{document}

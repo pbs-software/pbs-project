@@ -4,9 +4,12 @@ Authors:  JTS = Jon T. Schnute
           RH  = Rowan Haigh
 -----------------------------------
 
+0.1.1 (2023-06-22) [Rcheck=T Rbuild=T]
+  * Testing mirror on https://github.com/haighr
+
 0.1.0 (2023-01-16) [Rcheck=T Rbuild=T]
   * R code
-    + Changed the default name of the project from 'project' to 'newproject'. (RH 230116)
+    + Changed the default name of the project from 'project' to 'testproject'. (RH 230116)
   * GUI code
     + Updated the template GUI (RH 230116).
       - Removed 'Set' button for editor; navigating to a new program now sets the editor automatically.
